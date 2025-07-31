@@ -1,4 +1,5 @@
 ﻿using TaskFlow.Domain.Enums;
+using TaskFlow.Domain.ValueObjects;
 
 namespace TaskFlow.Domain.Entities
 {
@@ -9,6 +10,7 @@ namespace TaskFlow.Domain.Entities
 
         public DateTime DueDate { get; set; }
         public TaskItemStatus Status { get; set; }
+        public TaskPriority TaskPriority { get; set; }
 
         public int AssigneeId { get; set; }
         public required User Assignee { get; set; }
