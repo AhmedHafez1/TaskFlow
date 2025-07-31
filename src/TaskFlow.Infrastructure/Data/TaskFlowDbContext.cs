@@ -8,6 +8,7 @@ namespace TaskFlow.Infrastructure.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<TaskItem> TaskItems { get; set; }
+        public DbSet<ProjectMember> ProjectMembers { get; set; }
 
         public TaskFlowDbContext(DbContextOptions<TaskFlowDbContext> options)
             : base(options) { }
@@ -21,8 +22,8 @@ namespace TaskFlow.Infrastructure.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.Email).IsUnique();
-                entity.Property(e => e.Name).IsRequired();
-                entity.Property(e => e.Email).IsRequired();
+                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.Email).HasMaxLength(100);
             });
 
             // Cofigure Task Entity
@@ -35,10 +36,10 @@ namespace TaskFlow.Infrastructure.Data
                     .HasForeignKey(e => e.ProjectId);
                 entity.HasOne(t => t.Assignee).WithMany().HasForeignKey(e => e.AssigneeId);
                 entity.HasOne(t => t.Author).WithMany().HasForeignKey(e => e.AuthorId);
-                entity.Property(e => e.Name).IsRequired();
-                entity.Property(e => e.Description).IsRequired();
-                entity.Property(e => e.TaskPriority).IsRequired();
-                entity.Property(e => e.Status).IsRequired();
+                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.Description).HasMaxLength(400);
+                entity.Property(e => e.TaskPriority);
+                entity.Property(e => e.Status);
             });
 
             // Configure Project Entity
@@ -46,13 +47,20 @@ namespace TaskFlow.Infrastructure.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.HasOne(e => e.Owner).WithMany().HasForeignKey(e => e.OwnerId);
-                entity.Property(e => e.Name).IsRequired();
+                entity.Property(e => e.Name).HasMaxLength(100);
             });
 
             // Configure ProjectMember Entity
             modelBuilder.Entity<ProjectMember>(entity =>
             {
                 entity.HasKey(e => new { e.ProjectId, e.MemberId });
+                entity
+                    .HasOne(e => e.Project)
+                    .WithMany(p => p.Members)
+                    .HasForeignKey(e => e.ProjectId);
+                entity.HasOne(e => e.Member).WithMany().HasForeignKey(e => e.MemberId);
+                entity.HasIndex(e => new { e.ProjectId });
+                entity.HasIndex(e => new { e.MemberId });
             });
         }
     }

@@ -8,7 +8,7 @@ namespace TaskFlow.Domain.Entities
         public required string Name { get; set; }
         public required string Description { get; set; }
 
-        public DateTime DueDate { get; set; }
+        public DateTimeOffset DueDate { get; set; }
         public TaskItemStatus Status { get; set; }
         public TaskPriority TaskPriority { get; set; }
 
