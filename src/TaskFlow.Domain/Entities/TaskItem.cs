@@ -18,5 +18,6 @@ namespace TaskFlow.Domain.Entities
         public required User Author { get; set; }
         public int ProjectId { get; set; }
         public required Project Project { get; set; }
+        public List<TaskComment> TaskComments { get; set; } = new();
     }
 }

@@ -62,6 +62,18 @@ namespace TaskFlow.Infrastructure.Data
                 entity.HasIndex(e => new { e.ProjectId });
                 entity.HasIndex(e => new { e.MemberId });
             });
+
+            // Configure TaskComment Entity
+            modelBuilder.Entity<TaskComment>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity
+                    .HasOne(e => e.TaskItem)
+                    .WithMany(t => t.TaskComments)
+                    .HasForeignKey(e => e.TaskItemId);
+                entity.HasOne(e => e.Author).WithMany().HasForeignKey(e => e.AuthorId);
+                entity.Property(e => e.Comment).HasMaxLength(400);
+            });
         }
     }
 }
