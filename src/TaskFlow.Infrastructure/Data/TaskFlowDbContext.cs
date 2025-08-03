@@ -36,7 +36,7 @@ namespace TaskFlow.Infrastructure.Data
                     .HasForeignKey(e => e.ProjectId);
                 entity.HasOne(t => t.Assignee).WithMany().HasForeignKey(e => e.AssigneeId);
                 entity.HasOne(t => t.Author).WithMany().HasForeignKey(e => e.AuthorId);
-                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.Title).HasMaxLength(100);
                 entity.Property(e => e.Description).HasMaxLength(400);
                 entity.Property(e => e.TaskPriority);
                 entity.Property(e => e.Status);
@@ -56,7 +56,7 @@ namespace TaskFlow.Infrastructure.Data
                 entity.HasKey(e => new { e.ProjectId, e.MemberId });
                 entity
                     .HasOne(e => e.Project)
-                    .WithMany(p => p.Members)
+                    .WithMany(p => p.ProjectMembers)
                     .HasForeignKey(e => e.ProjectId);
                 entity.HasOne(e => e.Member).WithMany().HasForeignKey(e => e.MemberId);
                 entity.HasIndex(e => new { e.ProjectId });

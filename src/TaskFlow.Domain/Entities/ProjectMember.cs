@@ -4,11 +4,11 @@ namespace TaskFlow.Domain.Entities
 {
     public class ProjectMember : BaseEntity
     {
-        public int MemberId { get; set; }
-        public User? Member { get; set; }
-        public int ProjectId { get; set; }
-        public Project? Project { get; set; }
-        public ProjectRole Role { get; set; }
+        public int MemberId { get; private set; }
+        public User? Member { get; private set; }
+        public int ProjectId { get; private set; }
+        public Project? Project { get; private set; }
+        public ProjectRole Role { get; private set; }
 
         public ProjectMember() { }
 
