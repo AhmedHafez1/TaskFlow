@@ -1,4 +1,5 @@
-﻿using TaskFlow.Domain.ValueObjects;
+﻿using System.Diagnostics.CodeAnalysis;
+using TaskFlow.Domain.ValueObjects;
 
 namespace TaskFlow.Domain.Entities
 {
@@ -16,6 +17,7 @@ namespace TaskFlow.Domain.Entities
 
         public Project() { }
 
+        [SetsRequiredMembers]
         public Project(string name, string description, int ownerId)
         {
             Name = name;
