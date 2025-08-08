@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using TaskFlow.API.Extentions;
 using TaskFlow.Infrastructure.Data;
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddJwt(builder.Configuration);
+builder.Services.AddAuthorization();
 
 // Database
 builder.Services.AddDbContext<TaskFlowDbContext>(options =>
@@ -16,8 +18,7 @@ builder.Services.AddDbContext<TaskFlowDbContext>(options =>
 );
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
+builder.Services.AddCustomizedOpenApi();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,6 +29,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
