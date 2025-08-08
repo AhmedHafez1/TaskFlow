@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TaskFlow.API.Extentions;
 using TaskFlow.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddJwt(builder.Configuration);
 
 // Database
 builder.Services.AddDbContext<TaskFlowDbContext>(options =>
