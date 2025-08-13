@@ -1,4 +1,3 @@
-using System.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -45,7 +44,7 @@ namespace TaskFlow.Infrastructure.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(30),
+                Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = signingCredentials,
                 Issuer = _issuer,
                 Audience = _audience,
@@ -59,12 +58,28 @@ namespace TaskFlow.Infrastructure.Services
 
         public int GetUserId(string token)
         {
-            throw new NotImplementedException();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ReadJwtToken(token);
+            var userId = principal.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
+            return int.Parse(userId!);
         }
 
         public ClaimsPrincipal? ValidateToken(string token)
         {
-            throw new NotImplementedException();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = _issuer,
+                ValidAudience = _audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey)),
+            };
+
+            var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
+            return principal;
         }
     }
 }
