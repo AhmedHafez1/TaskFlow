@@ -22,7 +22,8 @@ namespace TaskFlow.Infrastructure.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.Email).IsUnique();
-                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.FirstName).HasMaxLength(100);
+                entity.Property(e => e.LastName).HasMaxLength(100);
                 entity.Property(e => e.Email).HasMaxLength(100);
             });
 
