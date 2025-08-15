@@ -9,14 +9,13 @@ namespace TaskFlow.Infrastructure.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<TaskItem> TaskItems { get; set; }
         public DbSet<ProjectMember> ProjectMembers { get; set; }
+        public DbSet<TaskComment> TaskComments { get; set; }
 
         public TaskFlowDbContext(DbContextOptions<TaskFlowDbContext> options)
             : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
             // Configure User Entity
             modelBuilder.Entity<User>(entity =>
             {
@@ -75,6 +74,8 @@ namespace TaskFlow.Infrastructure.Data
                 entity.HasOne(e => e.Author).WithMany().HasForeignKey(e => e.AuthorId);
                 entity.Property(e => e.Comment).HasMaxLength(400);
             });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

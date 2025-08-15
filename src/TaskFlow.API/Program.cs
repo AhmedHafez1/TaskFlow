@@ -1,7 +1,12 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 using TaskFlow.API.Extentions;
+using TaskFlow.Application.Interfaces.Repositories;
+using TaskFlow.Application.Interfaces.Services;
+using TaskFlow.Application.UseCases.Authentication;
+using TaskFlow.Application.UseCases.Projects;
 using TaskFlow.Infrastructure.Data;
+using TaskFlow.Infrastructure.Repositories;
+using TaskFlow.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +16,21 @@ builder.Services.AddControllers();
 
 builder.Services.AddJwt(builder.Configuration);
 builder.Services.AddAuthorization();
+
+// Services
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IPasswordHashingService, PasswordHashingService>();
+
+// Repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+
+// Use Cases
+builder.Services.AddScoped<RegisterUserUseCase>();
+builder.Services.AddScoped<LoginUserUseCase>();
+builder.Services.AddScoped<CreateProjectUseCase>();
 
 // Database
 builder.Services.AddDbContext<TaskFlowDbContext>(options =>
