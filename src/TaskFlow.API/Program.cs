@@ -18,6 +18,7 @@ builder.Services.AddJwt(builder.Configuration);
 builder.Services.AddAuthorization();
 
 // Services
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
@@ -26,6 +27,7 @@ builder.Services.AddScoped<IPasswordHashingService, PasswordHashingService>();
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 // Use Cases
 builder.Services.AddScoped<RegisterUserUseCase>();

@@ -9,7 +9,6 @@ namespace TaskFlow.Infrastructure.Data
         {
             var optionsBuilder = new DbContextOptionsBuilder<TaskFlowDbContext>();
 
-            // ⚠ Replace with your own connection string or load from config
             optionsBuilder.UseNpgsql(
                 "Server=localhost;Port=5432;Database=taskflow;User Id=postgres;Password=postgres;"
             );

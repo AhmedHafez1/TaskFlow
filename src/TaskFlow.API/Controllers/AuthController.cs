@@ -5,7 +5,7 @@ using TaskFlow.Application.UseCases.Authentication;
 
 namespace TaskFlow.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly ILogger<AuthController> _logger;
