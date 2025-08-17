@@ -5,23 +5,21 @@ using TaskFlow.Application.UseCases.Authentication;
 
 namespace TaskFlow.API.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly ILogger<AuthController> _logger;
-        private readonly IUserRepository _userRepository;
         private readonly RegisterUserUseCase _registerUserUseCase;
         private readonly LoginUserUseCase _loginUserUseCase;
 
         public AuthController(
             ILogger<AuthController> logger,
-            IUserRepository userRepository,
             RegisterUserUseCase registerUserUseCase,
             LoginUserUseCase loginUserUseCase
         )
         {
             _logger = logger;
-            _userRepository = userRepository;
             _registerUserUseCase = registerUserUseCase;
             _loginUserUseCase = loginUserUseCase;
         }

@@ -1,5 +1,6 @@
 using TaskFlow.Application.DTOs;
 using TaskFlow.Application.Interfaces.Repositories;
+using TaskFlow.Application.Interfaces.Services;
 using TaskFlow.Domain.Entities;
 using TaskFlow.Domain.ValueObjects;
 
@@ -8,22 +9,20 @@ namespace TaskFlow.Application.UseCases.Projects;
 public class CreateProjectUseCase
 {
     private readonly IProjectRepository _projectRepository;
-    private readonly IUserRepository _userRepository;
+    private readonly ICurrentUserService _currentUserService;
 
     public CreateProjectUseCase(
         IProjectRepository projectRepository,
-        IUserRepository userRepository
+        ICurrentUserService currentUserService
     )
     {
         _projectRepository = projectRepository;
-        _userRepository = userRepository;
+        _currentUserService = currentUserService;
     }
 
-    public async Task<ProjectDto> ExecuteAsync(CreateProjectDto dto, int userId)
+    public async Task<ProjectDto> ExecuteAsync(CreateProjectDto dto)
     {
-        var user = await _userRepository.GetByIdAsync(userId);
-        if (user == null)
-            throw new InvalidOperationException("User not found.");
+        var userId = _currentUserService.UserId;
 
         var project = new Project(dto.Name, dto.Description, userId);
 
