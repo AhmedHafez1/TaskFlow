@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskFlow.Domain.Entities;
+using TaskFlow.Domain.Enums;
+using TaskFlow.Domain.ValueObjects;
 
 namespace TaskFlow.Infrastructure.Data
 {
@@ -38,8 +40,10 @@ namespace TaskFlow.Infrastructure.Data
                 entity.HasOne(t => t.Author).WithMany().HasForeignKey(e => e.AuthorId);
                 entity.Property(e => e.Title).HasMaxLength(100);
                 entity.Property(e => e.Description).HasMaxLength(400);
-                entity.Property(e => e.TaskPriority);
-                entity.Property(e => e.Status);
+                entity
+                    .Property(e => e.TaskPriority)
+                    .HasConversion(v => (int)v, v => (TaskPriority)v);
+                entity.Property(e => e.Status).HasConversion(v => (int)v, v => (TaskItemStatus)v);
             });
 
             // Configure Project Entity
@@ -48,6 +52,8 @@ namespace TaskFlow.Infrastructure.Data
                 entity.HasKey(e => e.Id);
                 entity.HasOne(e => e.Owner).WithMany().HasForeignKey(e => e.OwnerId);
                 entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.Description).HasMaxLength(400);
+                entity.Property(e => e.Status).HasConversion(v => (int)v, v => (ProjectStatus)v);
             });
 
             // Configure ProjectMember Entity
@@ -61,6 +67,7 @@ namespace TaskFlow.Infrastructure.Data
                 entity.HasOne(e => e.Member).WithMany().HasForeignKey(e => e.MemberId);
                 entity.HasIndex(e => new { e.ProjectId });
                 entity.HasIndex(e => new { e.MemberId });
+                entity.Property(e => e.Role).HasConversion(v => (int)v, v => (ProjectRole)v);
             });
 
             // Configure TaskComment Entity

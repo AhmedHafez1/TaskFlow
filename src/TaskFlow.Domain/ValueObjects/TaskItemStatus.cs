@@ -2,8 +2,8 @@
 
 public enum TaskItemStatus
 {
-    ToDo ,
+    ToDo,
     InProgress,
     Postponed,
-    Done
+    Done,
 }
