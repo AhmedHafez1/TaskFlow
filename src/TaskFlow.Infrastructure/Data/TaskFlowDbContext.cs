@@ -84,5 +84,24 @@ namespace TaskFlow.Infrastructure.Data
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedDate = DateTimeOffset.UtcNow;
+                        entry.Entity.UpdatedDate = DateTimeOffset.UtcNow;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.UpdatedDate = DateTimeOffset.UtcNow;
+                        break;
+                }
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
     }
 }

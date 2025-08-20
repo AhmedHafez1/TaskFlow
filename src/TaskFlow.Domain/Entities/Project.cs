@@ -23,11 +23,10 @@ namespace TaskFlow.Domain.Entities
             Name = name;
             Description = description;
             OwnerId = ownerId;
-            CreatedDate = DateTimeOffset.UtcNow;
         }
 
-        public void Update(string name, string description) =>
-            (Name, Description) = (name, description);
+        public void Update(string name, string description, ProjectStatus status) =>
+            (Name, Description, Status) = (name, description, status);
 
         public void Archive() => Status = ProjectStatus.Archived;
 

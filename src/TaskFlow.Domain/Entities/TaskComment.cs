@@ -18,7 +18,6 @@ namespace TaskFlow.Domain.Entities
             Comment = comment;
             TaskItemId = taskItemId;
             AuthorId = authorId;
-            CreatedDate = DateTimeOffset.UtcNow;
         }
 
         public void Update(string comment) => Comment = comment;

@@ -17,7 +17,6 @@ namespace TaskFlow.Domain.Entities
             MemberId = memberId;
             ProjectId = projectId;
             Role = role;
-            CreatedDate = DateTimeOffset.UtcNow;
         }
 
         public void Update(ProjectRole role) => Role = role;

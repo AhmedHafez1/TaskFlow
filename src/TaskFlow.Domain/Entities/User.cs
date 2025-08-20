@@ -19,7 +19,6 @@ namespace TaskFlow.Domain.Entities
             FirstName = firstName;
             LastName = lastName;
             Email = email;
-            CreatedDate = DateTimeOffset.UtcNow;
             IsActive = true;
             PasswordHash = passwordHash;
         }

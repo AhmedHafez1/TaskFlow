@@ -23,7 +23,6 @@ public class CreateProjectUseCase
     public async Task<ProjectDto> ExecuteAsync(CreateProjectDto dto)
     {
         var userId = _currentUserService.UserId;
-
         var project = new Project(dto.Name, dto.Description, userId);
 
         project.AddMember(userId, ProjectRole.Owner);

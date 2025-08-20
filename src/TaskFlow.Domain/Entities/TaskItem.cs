@@ -39,7 +39,6 @@ namespace TaskFlow.Domain.Entities
             TaskPriority = taskPriority;
             AuthorId = authorId;
             ProjectId = projectId;
-            CreatedDate = DateTimeOffset.UtcNow;
         }
 
         public void Update(
