@@ -1,16 +1,12 @@
-using TaskFlow.Domain.ValueObjects;
-
 namespace TaskFlow.Application.DTOs
 {
-    public record ProjectDto(
+    public record ProjectSummaryDto(
         int Id,
         string Name,
         string Description,
         string Status,
         DateTimeOffset CreatedDate,
         DateTimeOffset? UpdatedDate,
-        int OwnerId,
-        int TaskCount,
-        int CompletedTaskCount
+        int OwnerId
     );
 }

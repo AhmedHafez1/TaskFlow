@@ -13,16 +13,19 @@ namespace TaskFlow.API.Controllers
         private readonly CreateProjectUseCase _createProjectUseCase;
         private readonly UpdateProjectUseCase _updateProjectUseCase;
         private readonly GetAllProjectsUseCase _getAllProjectsUseCase;
+        private readonly GetProjectsByOwnerUseCase _getProjectsByOwnerUseCase;
 
         public ProjectsController(
             CreateProjectUseCase createProjectUseCase,
             UpdateProjectUseCase updateProjectUseCase,
-            GetAllProjectsUseCase getAllProjectsUseCase
+            GetAllProjectsUseCase getAllProjectsUseCase,
+            GetProjectsByOwnerUseCase getProjectsByOwnerUseCase
         )
         {
             _createProjectUseCase = createProjectUseCase;
             _updateProjectUseCase = updateProjectUseCase;
             _getAllProjectsUseCase = getAllProjectsUseCase;
+            _getProjectsByOwnerUseCase = getProjectsByOwnerUseCase;
         }
 
         [HttpGet]
@@ -30,6 +33,12 @@ namespace TaskFlow.API.Controllers
         {
             var projects = await _getAllProjectsUseCase.ExecuteAsync();
             return Ok(projects);
+        }
+
+        [HttpGet("mine")]
+        public async Task<ActionResult<List<ProjectDto>>> GetMyOwenedProjects()
+        {
+            return Ok(await _getProjectsByOwnerUseCase.ExcecuteAsync());
         }
 
         [HttpPost]

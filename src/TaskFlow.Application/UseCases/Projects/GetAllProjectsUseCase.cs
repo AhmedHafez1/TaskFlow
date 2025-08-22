@@ -12,20 +12,18 @@ namespace TaskFlow.Application.UseCases.Projects
             _projectRepository = projectRepository;
         }
 
-        public async Task<List<ProjectDto>> ExecuteAsync()
+        public async Task<List<ProjectSummaryDto>> ExecuteAsync()
         {
             var projects = await _projectRepository.GetAllAsync();
             return projects
-                .Select(p => new ProjectDto(
+                .Select(p => new ProjectSummaryDto(
                     p.Id,
                     p.Name,
                     p.Description!,
-                    p.Status,
+                    p.Status.ToString(),
                     p.CreatedDate,
                     p.UpdatedDate,
-                    p.OwnerId,
-                    0,
-                    0
+                    p.OwnerId
                 ))
                 .ToList();
         }

@@ -21,12 +21,12 @@ namespace TaskFlow.Infrastructure.Repositories
             return project;
         }
 
-        public async Task<Project?> GetByOwnerIdAsync(int ownerId)
+        public IQueryable<Project> GetByOwnerIdAsync(int ownerId)
         {
-            var project = await _context
+            return _context
                 .Projects.Where(p => p.OwnerId == ownerId)
-                .FirstOrDefaultAsync();
-            return project;
+                .Include(p => p.TaskItems)
+                .AsNoTracking();
         }
     }
 }

@@ -4,6 +4,6 @@ namespace TaskFlow.Application.Interfaces.Repositories;
 
 public interface IProjectRepository : IGenericRepository<Project>
 {
-    Task<Project?> GetByOwnerIdAsync(int ownerId);
+    IQueryable<Project> GetByOwnerIdAsync(int ownerId);
     Task<Project?> GetByNameAsync(string name);
 }

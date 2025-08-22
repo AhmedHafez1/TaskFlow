@@ -23,7 +23,7 @@ namespace TaskFlow.Application.UseCases.Projects
                 project.Id,
                 project.Name,
                 project.Description!,
-                project.Status,
+                project.Status.ToString(),
                 project.CreatedDate,
                 project.UpdatedDate,
                 project.OwnerId,
