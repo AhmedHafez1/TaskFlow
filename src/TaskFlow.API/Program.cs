@@ -34,6 +34,7 @@ builder.Services.AddScoped<RegisterUserUseCase>();
 builder.Services.AddScoped<LoginUserUseCase>();
 builder.Services.AddScoped<CreateProjectUseCase>();
 builder.Services.AddScoped<UpdateProjectUseCase>();
+builder.Services.AddScoped<GetAllProjectsUseCase>();
 
 // Database
 builder.Services.AddDbContext<TaskFlowDbContext>(options =>

@@ -12,21 +12,31 @@ namespace TaskFlow.API.Controllers
     {
         private readonly CreateProjectUseCase _createProjectUseCase;
         private readonly UpdateProjectUseCase _updateProjectUseCase;
+        private readonly GetAllProjectsUseCase _getAllProjectsUseCase;
 
         public ProjectsController(
             CreateProjectUseCase createProjectUseCase,
-            UpdateProjectUseCase updateProjectUseCase
+            UpdateProjectUseCase updateProjectUseCase,
+            GetAllProjectsUseCase getAllProjectsUseCase
         )
         {
             _createProjectUseCase = createProjectUseCase;
             _updateProjectUseCase = updateProjectUseCase;
+            _getAllProjectsUseCase = getAllProjectsUseCase;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<ProjectDto>>> GetAllProjects()
+        {
+            var projects = await _getAllProjectsUseCase.ExecuteAsync();
+            return Ok(projects);
         }
 
         [HttpPost]
         public async Task<ActionResult<ProjectDto>> CreateProject(CreateProjectDto dto)
         {
             var project = await _createProjectUseCase.ExecuteAsync(dto);
-            return Ok(project);
+            return Created("api/projects", project);
         }
 
         [HttpPut("{projectId:int}")]
