@@ -4,6 +4,7 @@ using TaskFlow.Application.Interfaces.Repositories;
 using TaskFlow.Application.Interfaces.Services;
 using TaskFlow.Application.UseCases.Authentication;
 using TaskFlow.Application.UseCases.Projects;
+using TaskFlow.Application.UseCases.Tasks;
 using TaskFlow.Infrastructure.Data;
 using TaskFlow.Infrastructure.Repositories;
 using TaskFlow.Infrastructure.Services;
@@ -36,6 +37,7 @@ builder.Services.AddScoped<CreateProjectUseCase>();
 builder.Services.AddScoped<UpdateProjectUseCase>();
 builder.Services.AddScoped<GetAllProjectsUseCase>();
 builder.Services.AddScoped<GetProjectsByOwnerUseCase>();
+builder.Services.AddScoped<CreateTaskUseCase>();
 
 // Database
 builder.Services.AddDbContext<TaskFlowDbContext>(options =>

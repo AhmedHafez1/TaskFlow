@@ -44,6 +44,12 @@ namespace TaskFlow.Infrastructure.Data
                     .Property(e => e.TaskPriority)
                     .HasConversion(v => (int)v, v => (TaskPriority)v);
                 entity.Property(e => e.Status).HasConversion(v => (int)v, v => (TaskItemStatus)v);
+                entity
+                    .Property(e => e.DueDate)
+                    .HasConversion(
+                        v => v.UtcDateTime,
+                        v => new DateTimeOffset(DateTime.SpecifyKind(v, DateTimeKind.Utc))
+                    );
             });
 
             // Configure Project Entity

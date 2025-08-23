@@ -1,4 +1,5 @@
-﻿using TaskFlow.Domain.Enums;
+﻿using System.Diagnostics.CodeAnalysis;
+using TaskFlow.Domain.Enums;
 using TaskFlow.Domain.ValueObjects;
 
 namespace TaskFlow.Domain.Entities
@@ -22,6 +23,7 @@ namespace TaskFlow.Domain.Entities
 
         public TaskItem() { }
 
+        [SetsRequiredMembers]
         public TaskItem(
             string title,
             string description,
